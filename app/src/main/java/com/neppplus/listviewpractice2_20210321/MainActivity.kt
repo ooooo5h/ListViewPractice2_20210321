@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 //        학생 목록을 실제로 추가
-        mStudentList.add(Student("조경진", 1988))
-        mStudentList.add(Student("홍준호", 1995))
-        mStudentList.add(Student("김민철", 1990))
-        mStudentList.add(Student("김종진", 1991))
-        mStudentList.add(Student("장혜진", 1993))
+        mStudentList.add(Student("조경진", 1988, "서울시 은평구"))
+        mStudentList.add(Student("홍준호", 1995, "서울시 중구"))
+        mStudentList.add(Student("김민철", 1990, "서울시 서대문구"))
+        mStudentList.add(Student("김종진", 1991, "서울시 용산구"))
+        mStudentList.add(Student("장혜진", 1993, "서울시 강동구"))
 
 //        미뤄뒀던 mAdapter의 대입을 진행하자
         mAdapter = StudentAdapter(this, R.layout.student_list_item, mStudentList)
