@@ -1,6 +1,7 @@
 package com.neppplus.listviewpractice2_20210321.adapters
 
 import android.content.Context
+import android.icu.util.Calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +47,17 @@ class StudentAdapter(
 
 //        실제 데이터 UI 반영
         nameTxt.text = studentData.name
-        ageTxt.text = "(${studentData.birthYear}세)"
+//        ageTxt.text = "(${studentData.birthYear}세)"
+
+//        출생 년도 => 몇살인지? 나이에 반영
+//        2021, 1988년생 => 34살
+//        2021, 1991년생 => 31살 => 2021-출생년도+1 나이
+
+        val currentYear = java.util.Calendar.getInstance().get(Calendar.YEAR)
+        val koreanAge = currentYear - studentData.birthYear + 1
+
+        ageTxt.text = "(${koreanAge}세)"
+
 
 //        완성된 row가 화면에 뿌려질 결과로선정
         return row
