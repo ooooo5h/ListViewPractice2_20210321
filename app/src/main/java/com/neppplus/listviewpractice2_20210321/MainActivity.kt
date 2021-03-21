@@ -1,8 +1,10 @@
 package com.neppplus.listviewpractice2_20210321
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.neppplus.listviewpractice2_20210321.adapters.StudentAdapter
 import com.neppplus.listviewpractice2_20210321.datas.Student
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,26 +36,41 @@ class MainActivity : AppCompatActivity() {
         studentListView.adapter = mAdapter
         
 //        학생리스트뷰 클릭 이벤트 구현
-        studentListView.setOnItemClickListener { adapterView, view, i, l ->
+        studentListView.setOnItemClickListener { adapterView, view, position, l ->
 
 
 //            position : 몇번 줄이 눌렸는지 알려주는 역할
 
 //            클릭된 학생의 이름을 토스트로 출력해보자
-            val clickedStudent = mStudentList[i]
+            val clickedStudent = mStudentList[position]
 
             Toast.makeText(this, clickedStudent.name, Toast.LENGTH_SHORT).show()
         }
 //        리스트뷰 아이템 길게 눌렀을때 별도 처리
 
-        studentListView.setOnItemLongClickListener { adapterView, view, i, l ->
+        studentListView.setOnItemLongClickListener { adapterView, view, position, l ->
 
-//          롱클릭된 학생 목록에서 삭제
+//          우선 경고(확인) 창 띄워보자 => 확인이 눌렀을때만 삭제를 진행하자
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("학생 삭제")
+            alert.setMessage("정말 학생을 삭제하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface,     i ->
 
-            mStudentList.removeAt(i)
+//                확인 버튼이 눌렸을 때 실행 해줄 일
+//                학생 삭제는 이때 진행
+
+                //          롱클릭된 학생 목록에서 삭제
+
+                mStudentList.removeAt(position)
 
 //            어댑터가 이를 확인 (새로고침) 하도록
-            mAdapter.notifyDataSetChanged()
+                mAdapter.notifyDataSetChanged()
+            })
+            alert.setNegativeButton("취소", null)
+
+//            실제 얼럿 띄우기
+            alert.show()
+
 
             return@setOnItemLongClickListener true
         }
